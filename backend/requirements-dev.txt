@@ -1,0 +1,2 @@
+# Development & CI tooling (not required at runtime).
+ruff>=0.6,<1.0
