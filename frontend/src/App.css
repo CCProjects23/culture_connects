@@ -1,0 +1,51 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.app {
+  max-width: 640px;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.app h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.tagline {
+  opacity: 0.75;
+  margin-top: 0;
+}
+
+.status-card {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 12px;
+  text-align: left;
+}
+
+.status-card h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.status-card code {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(128, 128, 128, 0.15);
+  font-size: 0.85rem;
+}
+
+.ok {
+  color: #1a7f37;
+}
+
+.error {
+  color: #c0392b;
+}
