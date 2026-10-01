@@ -1,0 +1,39 @@
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+venv/
+staticfiles/
+media/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.vite/
+*.local
+
+# Logs
+*.log
+logs/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Test / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
