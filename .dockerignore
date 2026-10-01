@@ -1,0 +1,23 @@
+# Backend
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+db.sqlite3
+staticfiles/
+media/
+*.log
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Git / CI
+.git/
+.github/
