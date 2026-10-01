@@ -39,9 +39,10 @@ Diese Entscheidungen reduzieren Aufwand und Risiko erheblich und gelten als verb
 
 - [ ] **🎯 Asynchrone (rundenbasierte) Textdebatte zuerst**, nicht Live-Chat.
   *Grund: löst Cold-Start, Zeitzonen- und Verfügbarkeitsproblem bei < 100 Nutzern. Live/Real-time erst nach validiertem Kern.*
-- [ ] **🎯 Modularer Monolith** statt Microservices.
-  *Klare Domänengrenzen (Users, Profiles, Topics, Matching, Debates, Reputation, Moderation, AI) in **einem** Deploy-Artefakt.*
-- [ ] **🎯 KI hinter einem Adapter** (`AIProvider`-Interface), Analyse **asynchron** über Job-Queue.
+- [x] **🎯 Modularer Monolith** statt Microservices.
+  *Klare Domänengrenzen (Users, Profiles, Topics, Matching, Debates, Reputation, Moderation, AI) in **einem** Deploy-Artefakt. — Umgesetzt: Django-Apps unter `backend/apps/`.*
+- [x] **🎯 KI hinter einem Adapter** (`AIProvider`-Interface), Analyse **asynchron** über Job-Queue.
+  *Adapter + `MockAIProvider` in `apps/ai/providers` umgesetzt; asynchrone Job-Queue folgt in M5.*
 - [ ] **🧩 Service-Interfaces für spätere Austauschbarkeit** (`ReputationService`, `RewardService`) – DB-Implementierung heute, Blockchain-Adapter optional später.
 - [ ] **🎯 Privacy-by-Design & Server-seitige Zustandsvalidierung** von Beginn an (siehe [README](./README.md)).
 
@@ -51,7 +52,7 @@ Diese Entscheidungen reduzieren Aufwand und Risiko erheblich und gelten als verb
 
 | # | Milestone | Fokus | Scope |
 |:-:|-----------|-------|:-----:|
-| M0 | 🏗️ Fundament | Repo, CI, Grundgerüst | 🎯 |
+| M0 | 🏗️ Fundament ◔ | Repo, CI, Grundgerüst | 🎯 |
 | M1 | 👤 Identität & Profile | Registrierung, Pseudonym, Profil | 🎯 |
 | M2 | 🗂️ Themen | Topic-Engine | 🎯 |
 | M3 | 🔗 Matching | deterministisches Matching | 🎯 |
@@ -72,18 +73,23 @@ Diese Entscheidungen reduzieren Aufwand und Risiko erheblich und gelten als verb
 
 **Ziel:** Lauffähiges Grundsystem ohne unnötige Komplexität.
 
-- [ ] Monorepo-Struktur (`backend/`, `frontend/`, `docs/`, `infra/`)
-- [ ] Entwicklungsumgebung reproduzierbar (Docker Compose: App + DB + Queue)
-- [ ] Backend-Grundgerüst + Health-Endpoint
-- [ ] Datenbank + Migrationssystem
-- [ ] Frontend-Grundgerüst
-- [ ] Konfiguration über Umgebungsvariablen (`.env.example`)
-- [ ] Strukturiertes Logging + zentrale Fehlerbehandlung
+- [ ] **◔** Monorepo-Struktur (`backend/`, `frontend/`, `docs/`, `infra/`)
+  *`backend/`, `frontend/`, `docs/` vorhanden; `infra/` noch offen – Docker Compose liegt im Root, CI unter `.github/`.*
+- [x] Entwicklungsumgebung reproduzierbar (Docker Compose: App + DB + Queue)
+  *`docker-compose.yml` (backend, frontend, PostgreSQL, Redis); Config validiert & Images gebaut.*
+- [x] Backend-Grundgerüst + Health-Endpoint *(Django + DRF, `GET /api/health`)*
+- [x] Datenbank + Migrationssystem *(Django-Migrationen; PostgreSQL via `DATABASE_URL`, SQLite-Fallback)*
+- [x] Frontend-Grundgerüst *(React + TypeScript + Vite, Backend-Health-Statusanzeige)*
+- [x] Konfiguration über Umgebungsvariablen (`.env.example`) *(`django-environ`, liest Repo-`.env`)*
+- [ ] **◔** Strukturiertes Logging + zentrale Fehlerbehandlung
+  *Logging nach stdout konfiguriert; zentrale Fehlerbehandlung noch DRF-Default.*
 - [ ] Basis-Sicherheitskonzept (Auth-Strategie, Secret-Handling, Rate-Limit-Stelle)
-- [ ] CI-Pipeline (Lint + Tests + Build)
-- [ ] `AIProvider`-Interface mit Mock-Implementierung
+  *Teilweise: Secret-Handling über Env, DRF-SessionAuth als Standard; Rate-Limit-Stelle noch offen.*
+- [x] CI-Pipeline (Lint + Tests + Build) *(GitHub Actions: ruff · check · test | oxlint · build)*
+- [x] `AIProvider`-Interface mit Mock-Implementierung *(`apps/ai/providers`, `MockAIProvider`, Factory)*
 
 **✅ Definition of Done:** `docker compose up` startet App, DB & Queue; Health-Check grün; CI läuft.
+*Status: Compose-Config validiert & Images gebaut (Container-Start in der Dev-Sandbox durch rlimit-Beschränkung blockiert); Health-Check lokal grün; CI-Workflow vorhanden, erster Lauf auf GitHub noch ausstehend.*
 
 ---
 
