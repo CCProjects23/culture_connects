@@ -155,6 +155,12 @@ if DEBUG:
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 
 
+# AI provider (kept behind an adapter – see apps/ai). "mock" needs no API key.
+AI_PROVIDER = env("AI_PROVIDER", default="mock")
+AI_API_KEY = env("AI_API_KEY", default="")
+AI_MODEL = env("AI_MODEL", default="")
+
+
 # Logging to stdout (central error handling – see AGENT.md).
 LOGGING = {
     "version": 1,
